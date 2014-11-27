@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<server xmlns="urn:jboss:service:7.0"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="urn:jboss:service:7.0 jboss-service_7_0.xsd">
+
+  <mbean code="org.apache.directory.server.sar.DirectoryService" name="apacheds.system:service=Directory">
+
+    <attribute name="EmbeddedServerEnabled">true</attribute>
+    <attribute name="ContextFactory">org.apache.directory.server.jndi.ServerContextFactory</attribute>
+    <attribute name="ContextProviderURL">uid=admin,ou=system</attribute>
+    <attribute name="ContextSecurityAuthentication">simple</attribute>
+    <!-- "ContextSecurityCredentials" werden aus Properties-file geholt!!  -->
+    <attribute name="ContextSecurityCredentials">secret</attribute>
+    <attribute name="ContextSecurityPrincipal">uid=admin,ou=system</attribute>
+
+    <!-- ###################################################################
+      Embedded Apache Directory
+      ################################################################### -->
+
+    <attribute name="EmbeddedCustomRootPartitionName">dc=openthinclient,dc=org</attribute>
+
+    <attribute name="EmbeddedWkdir">${jboss.server.data.dir}/apacheds-store</attribute>
+    <attribute name="EmbeddedLDIFdir">${jboss.server.data.dir}/apacheds-ldif</attribute>
+
+    <attribute name="EmbeddedCustomBootstrapSchema">org.apache.directory.server.core.schema.bootstrap.NisSchema</attribute>
+
+    <!-- Access control                    -->
+
+    <attribute name="EmbeddedAccessControlEnabled">true</attribute>
+    <attribute name="EmbeddedAnonymousAccess">true</attribute>
+
+    <!-- Wire protocols                    -->
+    <attribute name="EmbeddedEnableNtp">false</attribute>
+    <attribute name="EmbeddedEnableKerberos">false</attribute>
+    <attribute name="EmbeddedEnableChangePassword">false</attribute>
+    <attribute name="EmbeddedLDAPNetworkingSupport">true</attribute>
+    <attribute name="EmbeddedLDAPPort">10389</attribute>
+    <attribute name="EmbeddedLDAPSPort">10636</attribute>
+
+  </mbean>
+</server>
+

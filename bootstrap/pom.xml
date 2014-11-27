@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<artifactId>master</artifactId>
+		<groupId>org.openthinclient</groupId>
+		<version>1.0.1</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>
+
+    <groupId>org.openthinclient</groupId>
+    <artifactId>bootstrap</artifactId>
+    <name>openthinclient.org - Bootstrap</name>
+    <description>Hier ist nur der JBoss aus dem öffentlichen Repo, ergänzt um eigene Moule oder Module wie 'commons'-Artifakte, 
+                 zusätzlich kann hier Startup-/Delivery-Skipte o.ä. festgelegt werden     
+    </description>
+              
+
+    <dependencies>
+
+        <!-- Thirdparty -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-email</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>commons-collections</groupId>
+            <artifactId>commons-collections</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- JBoss -->
+        <!--  dependency>
+            <groupId>org.jboss.eap</groupId>
+            <artifactId>jboss-eap-dist</artifactId>
+            <type>zip</type>
+        </dependency -->
+		<dependency>
+		    <groupId>org.wildfly</groupId>
+		    <artifactId>wildfly-dist</artifactId>
+		    <type>zip</type>
+		</dependency>        
+		<dependency>
+		    <groupId>junit</groupId>
+		    <artifactId>junit</artifactId>
+		    <scope>test</scope>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.jboss.arquillian.junit</groupId>
+		    <artifactId>arquillian-junit-container</artifactId>
+		    <scope>test</scope>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.wildfly</groupId>
+		    <artifactId>wildfly-arquillian-container-embedded</artifactId>
+		    <scope>test</scope>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.wildfly</groupId>
+		    <artifactId>wildfly-embedded</artifactId>
+		    <scope>test</scope>
+		</dependency>
+		
+		
+		<dependency>
+		    <groupId>org.jboss.arquillian.extension</groupId>
+		    <artifactId>arquillian-transaction-jta</artifactId>
+		    <scope>test</scope>
+		</dependency>
+
+        <!-- Deployment -->
+        <dependency>
+            <groupId>org.codehaus.groovy</groupId>
+            <artifactId>groovy-all</artifactId>
+            <scope>compile</scope>
+        </dependency>      
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>assembly-dir</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <descriptors>
+                        <descriptor>${basedir}/src/main/assembly/delivery.xml</descriptor>
+                        <descriptor>${basedir}/src/main/assembly/jboss.xml</descriptor>
+                    </descriptors>
+                </configuration>
+            </plugin>
+			<plugin>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<!-- id>unpack</id>
+						<phase>process-test-classes</phase -->
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>unpack</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<artifactItems>
+						<artifactItem>
+							<groupId>org.wildfly</groupId>
+							<artifactId>wildfly-dist</artifactId>
+							<version>${arquillian-wildfly-version}</version>
+							<type>zip</type>
+							<overWrite>false</overWrite>
+							<!--  outputDirectory>target</outputDirectory -->
+							<outputDirectory>${project.build.directory}</outputDirectory>
+						</artifactItem>
+					</artifactItems>
+				</configuration>
+			</plugin>            
+        </plugins>
+    </build>
+
+</project>

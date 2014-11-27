@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module xmlns="urn:jboss:module:1.0" name="org.apache.poi" slot="3.9">
+    <resources>
+        <resource-root path="poi-3.9.jar"/>
+    </resources>
+</module>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module xmlns="urn:jboss:module:1.0" name="org.apache.commons.fileupload" slot="1.2.2">
+    <resources>
+        <resource-root path="commons-fileupload-1.2.2.jar"/>
+    </resources>
+    <dependencies>
+        <module name="org.apache.commons.io" slot="${global.version.org.apache.commons.io}"/>
+        <module name="javax.portlet.api" slot="${global.version.javax.portlet}"/>
+    </dependencies>
+</module>

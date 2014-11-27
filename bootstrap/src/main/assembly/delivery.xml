@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<assembly xmlns="http://maven.apache.org/xsd/assembly" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/xsd/assembly http://maven.apache.org/xsd/assembly-1.1.1.xsd">
+    <id>delivery</id>
+    <formats>
+        <format>zip</format>
+    </formats>
+    <includeBaseDirectory>false</includeBaseDirectory>
+    <fileSets>
+
+        <!-- add groovy stuff -->
+        <!--  fileSet>
+            <directory>src/main/delivery</directory>
+            <outputDirectory>/</outputDirectory>
+            <includes>
+                <include>*.bat</include>
+                <include>*.sh</include>
+            </includes>
+            <fileMode>0755</fileMode>
+        </fileSet>
+        <fileSet>
+            <directory>${project.build.outputDirectory}</directory>
+            <outputDirectory>/groovy/</outputDirectory>
+        </fileSet>
+        <fileSet>
+            <directory>src/main/java</directory>
+            <outputDirectory>/groovy</outputDirectory>
+            <includes>
+                <include>**/*.groovy</include>
+            </includes>
+            <filtered>true</filtered>
+            <fileMode>0644</fileMode>
+        </fileSet -->
+
+        <!-- Liferay Patching tool -->
+        <!-- fileSet>
+            <directory>src/main/delivery/artifacts</directory>
+            <outputDirectory>/artifacts</outputDirectory>
+            <filtered>false</filtered>
+        </fileSet -->
+        
+        <!-- erst mal nur wieder den Jboss einpacken - oder gibt es was zu ändern? -->
+         <fileSet>
+            <directory>${project.build.directory}/wildfly-${arquillian-wildfly-version}</directory>
+            <outputDirectory>/</outputDirectory>
+            <filtered>false</filtered>
+        </fileSet>       
+
+    </fileSets>
+    <dependencySets>
+
+        <!-- deployment -->
+        <!-- dependencySet>
+            <useProjectArtifact>false</useProjectArtifact>
+            <outputDirectory>/groovy</outputDirectory>
+            <outputFileNameMapping>${artifact.artifactId}.${artifact.extension}</outputFileNameMapping>
+            <includes>
+                <include>org.codehaus.groovy:groovy-all</include>
+                <include>org.liquibase:liquibase-core</include>
+                <include>mysql:mysql-connector-java</include>
+                <include>commons-io:commons-io</include>
+                <include>org.apache.commons:commons-lang3</include>
+            </includes>
+            <fileMode>0644</fileMode>
+        </dependencySet -->
+
+        <!-- artifacts -->
+        <!--  dependencySet>
+            <useProjectArtifact>false</useProjectArtifact>
+            <outputDirectory>/artifacts</outputDirectory>
+            <includes>
+                <include>org.wildfly:wildfly-dist:zip</include>
+            </includes>
+            <fileMode>0644</fileMode>
+        </dependencySet -->
+
+        <!-- liferay patches -->
+        <!-- dependencySet>
+            <useProjectArtifact>false</useProjectArtifact>
+            <useStrictFiltering>true</useStrictFiltering>
+            <outputDirectory>/artifacts/patching-tool</outputDirectory>
+            <includes>
+                <include>com.liferay.portal:patching-tool:zip</include>
+            </includes>
+            <fileMode>0644</fileMode>
+        </dependencySet>
+        <dependencySet>
+            <useProjectArtifact>false</useProjectArtifact>
+            <useStrictFiltering>true</useStrictFiltering>
+            <outputDirectory>/artifacts/patching-tool/patches</outputDirectory>
+            <includes>
+                <include>com.liferay.portal:portal-web:zip:*:*</include>
+            </includes>
+            <fileMode>0644</fileMode>
+        </dependencySet -->
+
+    </dependencySets>
+</assembly>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jboss-deployment-structure xmlns="urn:jboss:deployment-structure:1.2">
+    <deployment>
+        <dependencies>
+            <!-- this modules are available for all classes/deployments of curent application -->
+            <module name="org.apache.commons.collections" export="true"/>
+            <module name="org.apache.xerces" export="true"/>
+        </dependencies>
+    </deployment>
+</jboss-deployment-structure>

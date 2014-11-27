@@ -1,0 +1,239 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>org.openthinclient</groupId>
+		<artifactId>server</artifactId>
+		<version>1.0.1</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>
+
+	<artifactId>dhcp-sar</artifactId>
+	<name>openthinclient.org PXE/DHCP proxy service SAR</name>
+	<packaging>jboss-sar</packaging>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>jboss-packaging-maven-plugin</artifactId>
+				<extensions>true</extensions>
+				<configuration>
+					<excludes>
+						<exclude>aopalliance:aopalliance</exclude>
+						<exclude>jasperreports:jasperreports</exclude>
+						<exclude>asm:asm-util</exclude>
+						<exclude>freemarker:freemarker</exclude>
+						<exclude>asm:asm</exclude>
+						<exclude>com.jamonapi:jamon</exclude>
+						<exclude>velocity:velocity-dep</exclude>
+						<exclude>
+							commons-attributes:commons-attributes-compiler
+						</exclude>
+						<exclude>
+							commons-attributes:commons-attributes-api
+						</exclude>
+						<exclude>cglib:cglib</exclude>
+						<exclude>qdox:qdox</exclude>
+						<exclude>oro:oro</exclude>
+						<exclude>
+							org.springframework:spring-aop
+						</exclude>
+						<exclude>velocity:velocity</exclude>
+						<exclude>aspectwerkz:aspectwerkz-core</exclude>
+						<exclude>xml-apis:xml-apis</exclude>
+						<exclude>commons-pool:commons-pool</exclude>
+						<exclude>xerces:xerces</exclude>
+						<exclude>ant:ant</exclude>
+						<exclude>jboss:jboss-system</exclude>
+						<exclude>org.slf4j:nlog4j</exclude>
+						<exclude>
+							org.openthinclient:tftp-service
+						</exclude>
+						<exclude>
+							org.openthinclient:nfs-service
+						</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+			<plugin>
+				<extensions>true</extensions>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>jboss-maven-plugin</artifactId>
+				<configuration>
+					<fileName>${project.build.directory}/${project.build.finalName}.sar</fileName>
+					<jbossHome>${basedir}/../../jboss</jbossHome>
+					<serverName>default/data/nfs/root</serverName>
+				</configuration>
+				<executions>
+					<execution>
+						<id>jboss-harddeploy</id>
+						<phase>pre-integration-test</phase>
+						<goals>
+							<goal>harddeploy</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			
+            <!-- Surefire -->
+            <plugin>  
+              <groupId>org.apache.maven.plugins</groupId>  
+              <artifactId>maven-surefire-plugin</artifactId>  
+              <version>2.12.3</version>  
+              <configuration>  
+                        <forkMode>perTest</forkMode>  
+                        <skip>false</skip>  
+                        <!-- Fork every test because it will launch a separate AS instance -->
+                         <!-- forkMode>always</forkMode -->
+                         <systemPropertyVariables>
+                            <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
+                            <jboss.home>${junit.dir}/jboss-wildfly</jboss.home>
+                            <module.path>${junit.dir}/jboss-wildfly/modules</module.path>
+                          </systemPropertyVariables>
+                          <redirectTestOutputToFile>false</redirectTestOutputToFile>
+              </configuration>  
+            </plugin>           
+            <!-- get wildfly and extract -->
+            <plugin>
+                   <artifactId>maven-dependency-plugin</artifactId>
+                        <executions>
+                         <execution>
+                            <id>unpack</id>
+                                <phase>process-test-classes</phase>
+                                 <goals>
+                                     <goal>unpack</goal>
+                                  </goals>
+                            <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>org.openthinclient</groupId>
+                                    <artifactId>bootstrap</artifactId>
+                                    <classifier>jboss</classifier>
+                                    <type>zip</type>
+                                    <version>${project.version}</version>
+                                    <overWrite>false</overWrite>
+                                    <outputDirectory>${junit.dir}/jboss-wildfly</outputDirectory>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.openthinclient</groupId>
+                                    <artifactId>bootstrap</artifactId>
+                                    <classifier>delivery</classifier>
+                                    <type>zip</type>
+                                    <version>${project.version}</version>
+                                    <overWrite>false</overWrite>
+                                    <outputDirectory>${junit.dir}/jboss-wildfly</outputDirectory>
+                                </artifactItem>                             
+                            </artifactItems>
+                         </configuration>
+                      </execution>
+                  </executions>
+             </plugin>
+		</plugins>
+	</build>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.openthinclient</groupId>
+			<artifactId>common</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.openthinclient</groupId>
+			<artifactId>server-shared</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>jboss</groupId> -->
+<!-- 			<artifactId>jboss-system</artifactId> -->
+<!-- 		</dependency> -->
+		<dependency>
+			<groupId>org.openthinclient.3rd-party.apacheds</groupId>
+			<artifactId>apacheds-protocol-dhcp</artifactId>
+			<version>1.0.1</version>
+		</dependency>
+		
+    <!-- neu zeug -->
+        <dependency>
+            <groupId>org.openthinclient</groupId>
+            <artifactId>bootstrap</artifactId>
+            <classifier>delivery</classifier>
+            <type>zip</type>
+            <version>${project.version}</version>
+            <scope>test</scope>
+        </dependency>       
+        <dependency>
+            <groupId>org.openthinclient</groupId>
+            <artifactId>bootstrap</artifactId>
+            <classifier>jboss</classifier>
+            <type>zip</type>
+            <version>${project.version}</version>
+            <scope>test</scope>
+        </dependency>
+        
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.jboss.arquillian.junit</groupId>
+            <artifactId>arquillian-junit-container</artifactId>
+            <scope>test</scope>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.wildfly</groupId>
+            <artifactId>wildfly-arquillian-container-embedded</artifactId>
+            <scope>test</scope>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.wildfly</groupId>
+            <artifactId>wildfly-embedded</artifactId>
+            <scope>test</scope>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.jboss.arquillian.extension</groupId>
+            <artifactId>arquillian-transaction-jta</artifactId>
+            <scope>test</scope>
+        </dependency>        
+        
+        <!-- the container adapter -->
+        <dependency>
+            <groupId>org.jboss.weld</groupId>
+            <artifactId>weld-core</artifactId>
+            <version>1.1.5.Final</version>
+            <scope>test</scope>
+        </dependency>   
+        
+        <!-- the maven adapter to resolve dependencies insige arquillian -->
+        <dependency>
+          <groupId>org.jboss.shrinkwrap.resolver</groupId>
+          <artifactId>shrinkwrap-resolver-impl-maven</artifactId>
+          <scope>test</scope>
+        </dependency>   
+        
+        <!-- Ldap Service als required -->
+        <dependency>
+            <groupId>org.openthinclient.3rd-party.apacheds</groupId>
+            <artifactId>apacheds-server-sar</artifactId>
+            <type>sar</type>
+            <version>${project.version}</version>
+            <scope>test</scope>
+        </dependency>
+        
+       <!--  -->
+       <dependency>
+       	<groupId>xerces</groupId>
+       	<artifactId>xercesImpl</artifactId>
+       	<version>2.8.1</version>
+       	<scope>test</scope>
+       </dependency>
+       
+	</dependencies>
+</project>

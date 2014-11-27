@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module xmlns="urn:jboss:module:1.0" name="org.apache.commons.io" slot="2.4">
+    <resources>
+        <resource-root path="commons-io-2.4.jar"/>
+    </resources>
+</module>
