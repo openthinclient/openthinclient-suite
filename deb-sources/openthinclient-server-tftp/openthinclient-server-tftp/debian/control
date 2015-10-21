@@ -1,0 +1,15 @@
+Source: openthinclient-server-tftp
+Section: net
+Priority: required
+Maintainer: Francois Fernandes <f.fernandes@fernandes-it.de>
+
+Package: openthinclient-server-tftp
+Architecture: i386
+Depends: openthinclient-server-ldap
+Description: OpenThinClient TFTP Server
+ The "OpenThinClient TFTP Server" is a server which supports the Internet
+ Trivial File Transfer Protocol. It is reposible for providing kernel and
+ initrd for ThinClients booting via PXE.
+ .
+ It is build as a "Service Archive" (SAR) to be deployed by the JBoss
+ Application Server.
