@@ -1,7 +1,0 @@
-dh_installdirs
-dh_fixperms
-dh_installdeb
-dh_gencontrol
-dh_md5sums
-dh_builddeb
-dh_builddeb
