@@ -61,3 +61,7 @@ buildNumber.properties
 *.iml
 .idea
 atlassian-ide-plugin.xml
+
+# tcos deb sources
+deb-sources/*/*/deploy/*.ear
+deb-sources/*/*/deploy/*.sar
