@@ -1,3 +1,10 @@
+openthinclient-server-tftp (1.1.1-4) unstable; urgency=low
+
+  * added tftp/template.txt
+  * version bump
+
+ -- Joern Frenzel <j.frenzel@openthinclient.com>  Thu, 03 Dec 2015 18:07:10 +0100
+
 openthinclient-server-tftp (1.1.1-0) unstable; urgency=medium
 
   * Test of Francois latest artifacts

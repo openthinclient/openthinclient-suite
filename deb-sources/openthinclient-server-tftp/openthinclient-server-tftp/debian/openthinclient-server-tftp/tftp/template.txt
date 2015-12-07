@@ -1,0 +1,18 @@
+DEFAULT tcos
+
+LABEL tcos
+	KERNEL	${BootOptions.KernelName}
+	INITRD	${BootOptions.InitrdName},${BootOptions.KernelName}-modules.img${BootOptions.FirmwareImage}
+	APPEND	nfsroot=${BootOptions.NFSRootserver}:${BootOptions.NFSRootPath} \
+		nfshome=${HomeOptions.NFSHomeserver}:${HomeOptions.NFSHomePath} \
+		ldapurl=${Directory.Primary.LDAPURLs}????bindname=${urlencoded:Directory.Primary.ReadOnly.Principal},X-BINDPW=${base64:Directory.Primary.ReadOnly.Secret} \
+		ro max_loop=256 \
+		${VerbosityOptions.Verbosity} \
+		${BootOptions.GpuModule} \
+		splashImage=${VerbosityOptions.SplashImage} \
+		${BootOptions.Debug} \
+		${BootOptions.ExtraOptions}
+	IPAPPEND 1
+
+
+##

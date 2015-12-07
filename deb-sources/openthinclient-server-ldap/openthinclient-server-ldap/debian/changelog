@@ -1,3 +1,9 @@
+openthinclient-server-ldap (1.1.1-4) unstable; urgency=low
+
+  * version bump
+
+ -- Joern Frenzel <j.frenzel@openthinclient.com>  Wed, 02 Dec 2015 15:08:18 +0100
+
 openthinclient-server-ldap (1.1.1-1) unstable; urgency=medium
 
   * Test of Francois latest artifacts

@@ -7,10 +7,10 @@
 # This special exception was added by Craig Small in version 0.37 of dh-make.
 
 # Uncomment this to turn on verbose mode.
-#export DH_VERBOSE=1
+export DH_VERBOSE=1
 
 
-SYNCDIRS = "deploy schema"
+# SYNCDIRS = "deploy schema"
 
 
 CFLAGS = -Wall -g
@@ -48,18 +48,19 @@ clean:
 	# Add here commands to clean up after the build process.
 	#-$(MAKE) clean
 
-	dh_clean 
+	# dh_clean 
 
 install: build
+	> debian/files
 	dh_testdir
 	dh_testroot
-	dh_clean -k 
+	# dh_clean -k 
 	dh_installdirs
 
 	# Add here commands to install the package into debian/openthinclient-manager.
 	#$(MAKE) install DESTDIR=$(CURDIR)/debian/openthinclient-manager
 
-	cp -Ral deploy debian/openthinclient-manager/
+	#cp -Ral deploy debian/openthinclient-manager/
 
 # Build architecture-independent files here.
 binary-indep: build install

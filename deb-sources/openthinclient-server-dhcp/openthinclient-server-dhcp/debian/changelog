@@ -1,3 +1,9 @@
+openthinclient-server-dhcp (1.1.1-4) unstable; urgency=low
+
+  * version bump
+
+ -- Joern Frenzel <j.frenzel@openthinclient.com>  Wed, 02 Dec 2015 15:03:34 +0100
+
 openthinclient-server-dhcp (1.1.1-0) unstable; urgency=medium
 
   * Test of Francois latest artifacts
